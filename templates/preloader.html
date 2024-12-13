@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}My App{% endblock %}</title>
+    <style>
+        /* Full-screen preloader container */
+        #preloader {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #f4f4f4;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            z-index: 9999;
+        }
+
+        /* Progress bar container */
+        .progress-container {
+            width: 80%;
+            background-color: #ddd;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-top: 20px;
+        }
+
+        /* Progress bar itself */
+        .progress-bar {
+            height: 20px;
+            width: 0%; /* Initially at 0% */
+            background-color: black;
+            transition: width 0.1s ease; /* Smooth width transition */
+        }
+
+        /* Spinner */
+        .spinner {
+            border: 8px solid black;
+            border-radius: 50%;
+            border-top: 8px solid #007bff;
+            width: 60px;
+            height: 60px;
+            animation: spin 1s linear infinite;
+        }
+
+        /* Animation for spinner */
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Percentage text */
+        #progress-percentage {
+            margin-top: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #333;
+        }
+    </style>
+</head>
+
+<body>
+
+
+    <center>
+        <h3 class="mt-10 text-success">Please Wait.Loading...</h3>
+    </center>
+    <div id="preloader">
+        <div class="spinner"></div>
+        <div class="progress-container">
+            <div class="progress-bar" id="progress-bar"></div>
+        </div>
+        <div id="progress-percentage">0%</div>
+    </div>
+
+    <script>
+        window.onload = function () {
+            let progress = 0; 
+            const progressBar = document.getElementById('progress-bar');
+            const progressPercentage = document.getElementById('progress-percentage');
+
+            
+            const interval = setInterval(() => {
+                if (progress < 100) {
+                    progress += 1; 
+                    progressBar.style.width = progress + '%';
+                    progressPercentage.textContent = progress + '%'; 
+                } else {
+                    clearInterval(interval);
+                    document.getElementById('preloader').style.display = 'none';
+                    window.location.href = "/register";
+                }
+            }, 30); 
+        };
+    </script>
+</body>
+</html>
